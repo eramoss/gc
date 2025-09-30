@@ -30,7 +30,8 @@ Token *Lexico::nextToken() {
       }
     }
   }
-  if (endState < 0 || (endState != state && tokenForState(oldState) == -2))
+  if (endState < 0 || (endState != state &&
+                       tokenForState(oldState) == static_cast<TokenId>(-2)))
     throw LexicalError(SCANNER_ERROR[oldState], start);
 
   position = end;
