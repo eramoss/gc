@@ -9,7 +9,7 @@ MAIN_SRCS = main.cpp
 BUILD_DIR = build
 MAIN = $(BUILD_DIR)/main
 
-GENERATED_SRCS = $(wildcard generated/*.cpp) execute.cpp
+GENERATED_SRCS = $(wildcard generated/*.cpp)
 GENERATED_OBJS = $(patsubst %.cpp,$(BUILD_DIR)/%.o,$(GENERATED_SRCS)) 
 
 all: $(BUILD_DIR) $(MAIN)
@@ -22,9 +22,6 @@ $(BUILD_DIR)/main.o: $(MAIN_SRCS) | $(BUILD_DIR)
 
 $(BUILD_DIR)/generated/%.o: generated/%.cpp | $(BUILD_DIR)
 	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-
-$(BUILD_DIR)/%.o: %.cpp | $(BUILD_DIR)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(MAIN): $(BUILD_DIR)/main.o $(GENERATED_OBJS)

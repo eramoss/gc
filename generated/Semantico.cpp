@@ -1,8 +1,109 @@
 #include "Semantico.h"
-#include "Constants.h"
+#include <cmath>
+#include <iostream>
 
-extern void execute(int action, const Token *token);
+max_int Semantico::pop_stack() {
+  if (stack.empty()) {
+    throw SemanticError("Erro: pilha de calculo vazia what have you done?");
+  }
+  max_int value = stack.back();
+  stack.pop_back();
+  return value;
+}
 
 void Semantico::executeAction(int action, const Token *token) {
-  execute(action, token);
+  max_int val1, val2, result;
+  std::string lexeme = token->getLexeme();
+
+  switch (action) {
+
+  case 99: {
+    id_ = lexeme;
+    break;
+  }
+
+  case 0: {
+    result = pop_stack();
+
+    if (id_.empty()) {
+      throw SemanticError("Erro: sem id para atribuir o valor no assing");
+    }
+
+    symbols[id_] = result;
+
+    id_.clear();
+    break;
+  }
+
+  case 1: {
+    if (symbols.count(lexeme) == 0) {
+      throw SemanticError("Erro: variavel '" + lexeme + "' não existe bro");
+    }
+    stack.push_back(symbols[lexeme]);
+    break;
+  }
+  case 2: {
+    try {
+      max_int bin_val = std::stoll(lexeme, nullptr, 2);
+      stack.push_back(bin_val);
+    } catch (const std::exception &e) {
+      throw SemanticError("Erro: binario muito grande ou invalido");
+    }
+    break;
+  }
+
+  case 3:
+  case 4: {
+    val2 = pop_stack();
+    val1 = pop_stack();
+    result = (action == 3) ? (val1 + val2) : (val1 - val2);
+    stack.push_back(result);
+    break;
+  }
+
+  case 5:
+  case 6: {
+    val2 = pop_stack();
+    val1 = pop_stack();
+    if (action == 6 && val2 == 0.0) {
+      throw SemanticError("Erro: divisão por zero oh no");
+    }
+    result = (action == 5) ? (val1 * val2) : (val1 / val2);
+    stack.push_back(result);
+    break;
+  }
+
+  case 7: {
+    val2 = pop_stack();
+    val1 = pop_stack();
+    stack.push_back(std::pow(val1, val2));
+    break;
+  }
+
+  case 8: {
+    val2 = pop_stack();
+    val1 = pop_stack();
+
+    if (val2 <= 0) {
+      throw SemanticError("Erro: dominio invalido prolog (val < 0)");
+    }
+    if (val1 <= 0 || val1 == 1) {
+      throw SemanticError("Erro: base invalida prolog (deve ser > 0 e != 1)");
+    }
+
+    result = std::log(val1) / std::log(val2);
+
+    stack.push_back(result);
+    break;
+  }
+
+  case 10: {
+    result = pop_stack();
+    std::cout << "[PRINT] " << result << std::endl;
+    break;
+  }
+
+  default:
+    break;
+  }
 }

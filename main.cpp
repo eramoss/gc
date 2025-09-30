@@ -9,12 +9,14 @@
 std::string readFile(const std::string &filename) {
   std::ifstream file(filename);
   if (!file.is_open()) {
-    throw std::runtime_error("Não foi possível abrir o arquivo: " + filename);
+    throw std::runtime_error("nao foi possível abrir o arquivo: " + filename);
   }
   std::stringstream buffer;
   buffer << file.rdbuf();
   return buffer.str();
 }
+
+// estrutura do codigo de analise no generated/semantico.cpp
 
 int main(int argc, char *argv[]) {
   if (argc != 2) {
@@ -40,7 +42,7 @@ int main(int argc, char *argv[]) {
     sintatico.parse(&lexico, &semantico);
 
     std::cout << "\n--- SUCESSO ---\n"
-              << "Análise e Interpretação concluídas." << std::endl;
+              << "Analise e interpretação feita" << std::endl;
 
   } catch (const LexicalError &e) {
     std::cerr << "\n--- ERRO LÉXICO ---\n"
