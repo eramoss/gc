@@ -7,7 +7,7 @@ INCLUDES = -Igenerated
 MAIN_SRCS = main.cpp 
 
 BUILD_DIR = build
-MAIN = $(BUILD_DIR)/main
+MAIN = $(BUILD_DIR)/gc
 
 GENERATED_SRCS = $(wildcard generated/*.cpp)
 GENERATED_OBJS = $(patsubst %.cpp,$(BUILD_DIR)/%.o,$(GENERATED_SRCS)) 
@@ -32,5 +32,10 @@ clean:
 
 clang_cmd: $(BUILD_DIR)
 	bear --output $(BUILD_DIR)/compile_commands.json -- make -B
+
+
+test: $(MAIN)
+	python ./tests/runner.py
+
 
 .PHONY: all clean clang_cmd
