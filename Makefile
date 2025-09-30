@@ -7,16 +7,25 @@ INCLUDES = -Ithirdparty/dsun/src -Igenerated
 MAIN_SRC = main.cpp
 
 BUILD_DIR = build
-
 MAIN = $(BUILD_DIR)/main
+
+GENERATED_SRCS = $(wildcard generated/*.cpp)
+GENERATED_OBJS = $(patsubst %.cpp,$(BUILD_DIR)/%.o,$(GENERATED_SRCS))
 
 all: $(BUILD_DIR) $(MAIN)
 
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
-$(MAIN): $(MAIN_SRC) | $(BUILD_DIR)
-	$(CC) $(CFLAGS) -o $@ $(MAIN_SRC) $(LIBS) $(INCLUDES)
+$(BUILD_DIR)/main.o: main.cpp | $(BUILD_DIR)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(BUILD_DIR)/generated/%.o: generated/%.cpp | $(BUILD_DIR)
+	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(MAIN): $(BUILD_DIR)/main.o $(GENERATED_OBJS)
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
 clean:
 	rm -rf $(BUILD_DIR)
@@ -24,5 +33,4 @@ clean:
 clang_cmd: $(BUILD_DIR)
 	bear --output $(BUILD_DIR)/compile_commands.json -- make -B
 
-
-.PHONY: all clean
+.PHONY: all clean clang_cmd
