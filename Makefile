@@ -2,26 +2,29 @@ CC = clang++
 CFLAGS = -Wall -Wextra -std=c++20
 
 LIBS = -Lgenerated
-INCLUDES = -Ithirdparty/dsun/src -Igenerated 
+INCLUDES = -Igenerated 
 
-MAIN_SRC = main.cpp
+MAIN_SRCS = main.cpp 
 
 BUILD_DIR = build
 MAIN = $(BUILD_DIR)/main
 
-GENERATED_SRCS = $(wildcard generated/*.cpp)
-GENERATED_OBJS = $(patsubst %.cpp,$(BUILD_DIR)/%.o,$(GENERATED_SRCS))
+GENERATED_SRCS = $(wildcard generated/*.cpp) execute.cpp
+GENERATED_OBJS = $(patsubst %.cpp,$(BUILD_DIR)/%.o,$(GENERATED_SRCS)) 
 
 all: $(BUILD_DIR) $(MAIN)
 
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
-$(BUILD_DIR)/main.o: main.cpp | $(BUILD_DIR)
+$(BUILD_DIR)/main.o: $(MAIN_SRCS) | $(BUILD_DIR)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(BUILD_DIR)/generated/%.o: generated/%.cpp | $(BUILD_DIR)
 	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(BUILD_DIR)/%.o: %.cpp | $(BUILD_DIR)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(MAIN): $(BUILD_DIR)/main.o $(GENERATED_OBJS)

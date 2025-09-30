@@ -44,12 +44,12 @@ COMMA: ,
 <program> ::= <statement_list>;
 <statement_list> ::= <statement> <statement_list> | <statement>;
 <statement> ::= <assing> SEMICOLON | <f> SEMICOLON;
-<assing> ::= ID ASSING <expression> #0;
+<assing> ::= ID #99 ASSING <expression> #0; // 0 indica termino
 
 <expression> ::= <expression> SUM <term> #3 | <expression> SUB <term> #4 | <term>; // P1
 <term> ::= <term> MUL <factor> #5 | <term> DIV <factor> #6 | <factor>; // P2
 <factor> ::= <factor> EXP <unary> #7 | <unary>; // P#
-<unary> ::= LOG LPAREN <param_values> RPAREN #8 | <value>; // P4
+<unary> ::= LOG <params> #8 | <value>; // P4
 
 <value> ::= ID #1 | BINARY_VALUE #2 | LPAREN <expression> RPAREN;
 

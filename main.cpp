@@ -1,5 +1,3 @@
-#include "dsun.h"
-
 #include "Lexico.h"
 #include "Semantico.h"
 #include "Sintatico.h"

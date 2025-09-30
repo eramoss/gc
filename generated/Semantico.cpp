@@ -1,11 +1,8 @@
 #include "Semantico.h"
 #include "Constants.h"
 
-#include <iostream>
+extern void execute(int action, const Token *token);
 
-void Semantico::executeAction(int action, const Token *token)
-{
-    std::cout << "Ação: " << action << ", Token: "  << token->getId() 
-              << ", Lexema: " << token->getLexeme() << std::endl;
+void Semantico::executeAction(int action, const Token *token) {
+  execute(action, token);
 }
-
