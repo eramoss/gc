@@ -81,8 +81,15 @@ void Semantico::executeAction(int action, const Token *token) {
   }
 
   case 8: {
-    val2 = pop_stack();
-    val1 = pop_stack();
+    if (f_args.size() != 2) {
+      throw SemanticError("Erro: log precisa de 2 argumentos, "
+                          "Foram fornecidos " +
+                          std::to_string(f_args.size()) + ".");
+    }
+    val2 = f_args.back();
+    f_args.pop_back();
+    val1 = f_args.back();
+    f_args.pop_back();
 
     if (val2 <= 0) {
       throw SemanticError("Erro: dominio invalido prolog (val < 0)");
@@ -98,8 +105,27 @@ void Semantico::executeAction(int action, const Token *token) {
   }
 
   case 10: {
-    result = pop_stack();
-    std::cout << "[PRINT] " << result << std::endl;
+    if (f_args.empty()) {
+      throw SemanticError("Erro: PRINT requer pelo menos 1 argumento.");
+    }
+
+    for (size_t i = 0; i < f_args.size(); ++i) {
+      std::cout << f_args[i];
+      if (i < f_args.size() - 1) {
+        std::cout << ", ";
+      }
+    }
+    std::cout << std::endl;
+    break;
+  }
+
+  case 100: {
+    f_args.clear();
+    break;
+  }
+  case 101: {
+    max_int arg = pop_stack();
+    f_args.push_back(arg);
     break;
   }
 

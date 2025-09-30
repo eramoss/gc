@@ -2,34 +2,34 @@
 #define Sintatico_H
 
 #include "Constants.h"
-#include "Token.h"
 #include "Lexico.h"
 #include "Semantico.h"
 #include "SyntacticError.h"
+#include "Token.h"
 
 #include <stack>
 
-class Sintatico
-{
+class Sintatico {
 public:
-    Sintatico() : previousToken(0), currentToken(0) { }
+  Sintatico() : previousToken(0), currentToken(0) {}
 
-    ~Sintatico()
-    {
-        if (previousToken != 0 && previousToken != currentToken) delete previousToken;
-        if (currentToken != 0)  delete currentToken;
-    }
+  ~Sintatico() {
+    if (previousToken != 0 && previousToken != currentToken)
+      delete previousToken;
+    if (currentToken != 0)
+      delete currentToken;
+  }
 
-    void parse(Lexico *scanner, Semantico *semanticAnalyser);
+  void parse(Lexico *scanner, Semantico *semanticAnalyser);
 
 private:
-    std::stack<int> stack;
-    Token *previousToken;
-    Token *currentToken;
-    Lexico *scanner;
-    Semantico *semanticAnalyser;
+  std::stack<int> stack;
+  Token *previousToken;
+  Token *currentToken;
+  Lexico *scanner;
+  Semantico *semanticAnalyser;
 
-    bool step();
+  bool step();
 };
 
 #endif

@@ -54,5 +54,5 @@ COMMA: ,
 <value> ::= ID #1 | BINARY_VALUE #2 | LPAREN <expression> RPAREN;
 
 <f> ::= PRINT <params> #10; 
-<params> ::= LPAREN <param_values> RPAREN; 
-<param_values> ::= <value> COMMA <param_values> | <value>; 
+<params> ::= #100 LPAREN <param_values> RPAREN; 
+<param_values> ::= <expression> #101 COMMA <param_values> | <expression> #101; 

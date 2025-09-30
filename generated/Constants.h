@@ -38,10 +38,10 @@ const int ACCEPT = 3;
 const int GO_TO  = 4;
 const int ERROR  = 5;
 
-extern const int PARSER_TABLE[52][128][2];
+extern const int PARSER_TABLE[54][130][2];
 
 extern const int PRODUCTIONS[23][2];
 
-extern const char *PARSER_ERROR[52];
+extern const char *PARSER_ERROR[54];
 
 #endif

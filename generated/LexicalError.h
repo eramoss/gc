@@ -5,12 +5,10 @@
 
 #include <string>
 
-class LexicalError : public AnalysisError
-{
+class LexicalError : public AnalysisError {
 public:
-
-    LexicalError(const std::string &msg, int position = -1)
-      : AnalysisError(msg, position) { }
+  LexicalError(const std::string &msg, int position = -1)
+      : AnalysisError(msg, position) {}
 };
 
 #endif

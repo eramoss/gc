@@ -5,12 +5,10 @@
 
 #include <string>
 
-class SemanticError : public AnalysisError
-{
+class SemanticError : public AnalysisError {
 public:
-
-    SemanticError(const std::string &msg, int position = -1)
-      : AnalysisError(msg, position) { }
+  SemanticError(const std::string &msg, int position = -1)
+      : AnalysisError(msg, position) {}
 };
 
 #endif

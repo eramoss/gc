@@ -5,12 +5,10 @@
 
 #include <string>
 
-class SyntacticError : public AnalysisError
-{
+class SyntacticError : public AnalysisError {
 public:
-
-    SyntacticError(const std::string &msg, int position = -1)
-      : AnalysisError(msg, position) { }
+  SyntacticError(const std::string &msg, int position = -1)
+      : AnalysisError(msg, position) {}
 };
 
 #endif

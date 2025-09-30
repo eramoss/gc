@@ -1,6 +1,0 @@
-[submodule "dsun"]
-	path = dsun
-	url = https://github.com/eramoss/dsun
-[submodule "thirdparty/dsun"]
-	path = thirdparty/dsun
-	url = https://github.com/eramoss/dsun
