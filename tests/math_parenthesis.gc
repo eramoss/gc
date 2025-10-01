@@ -1,0 +1,8 @@
+a = 111;
+b = 101;
+c = 11;
+
+x = c * ((a + b)/b);
+y = c * a + b / b;
+print(x);
+print(y);
