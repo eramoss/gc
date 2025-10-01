@@ -1,10 +1,12 @@
 #include "Lexico.h"
+#include "SemanticError.h"
 #include "Semantico.h"
 #include "Sintatico.h"
 
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <string.h>
 
 std::string readFile(const std::string &filename) {
   std::ifstream file(filename);
@@ -19,7 +21,7 @@ std::string readFile(const std::string &filename) {
 // estrutura do codigo de analise no generated/semantico.cpp
 
 int main(int argc, char *argv[]) {
-  if (argc != 2) {
+  if (argc < 2) {
     std::cerr << "Usage: " << argv[0] << " <path_to_code>" << std::endl;
     return 1;
   }
@@ -35,6 +37,18 @@ int main(int argc, char *argv[]) {
   Lexico lexico;
   Sintatico sintatico;
   Semantico semantico;
+  semantico.print_type = "base10";
+  for (int i = 0; i < argc; i++) {
+    if (strcmp(argv[i], "-p") == 0) {
+      if (i + 1 < argc) {
+        semantico.print_type = argv[++i];
+      } else {
+        fprintf(stderr,
+                "Erro: sem argumento para -p [base2, default: base10]\n");
+        exit(EXIT_FAILURE);
+      }
+    }
+  }
 
   lexico.setInput(input_code.c_str());
 

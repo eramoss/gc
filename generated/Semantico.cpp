@@ -1,4 +1,6 @@
 #include "Semantico.h"
+#include "SemanticError.h"
+#include <bitset>
 #include <cmath>
 #include <iostream>
 
@@ -110,7 +112,19 @@ void Semantico::executeAction(int action, const Token *token) {
     }
 
     for (size_t i = 0; i < f_args.size(); ++i) {
-      std::cout << f_args[i];
+      std::string p = "";
+      if (print_type == "base2") {
+        p = std::bitset<64>(f_args[i]).to_string();
+        p.erase(0, p.find_first_not_of('0'));
+      } else if (print_type == "base10") {
+        p = std::to_string(f_args[i]);
+      } else {
+        std::cerr << "-p não aceito [base2, base10]: " + print_type
+                  << std::endl;
+        exit(1);
+      }
+
+      std::cout << p;
       if (i < f_args.size() - 1) {
         std::cout << ", ";
       }

@@ -1,7 +1,6 @@
 #ifndef SEMANTICO_H
 #define SEMANTICO_H
 
-#include "SemanticError.h"
 #include "Token.h"
 #include <map>
 #include <vector>
@@ -18,6 +17,7 @@ private:
   max_int pop_stack();
 
 public:
+  std::string print_type = "base10";
   void executeAction(int action, const Token *token);
 };
 
