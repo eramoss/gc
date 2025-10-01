@@ -40,10 +40,6 @@ int main(int argc, char *argv[]) {
 
   try {
     sintatico.parse(&lexico, &semantico);
-
-    std::cout << "\n--- SUCESSO ---\n"
-              << "Analise e interpretação feita" << std::endl;
-
   } catch (const LexicalError &e) {
     std::cerr << "\n--- ERRO LÉXICO ---\n"
               << "Posição: " << e.getPosition()
