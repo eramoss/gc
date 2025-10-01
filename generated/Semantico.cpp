@@ -114,8 +114,11 @@ void Semantico::executeAction(int action, const Token *token) {
     for (size_t i = 0; i < f_args.size(); ++i) {
       std::string p = "";
       if (print_type == "base2") {
-        p = std::bitset<64>(f_args[i]).to_string();
-        p.erase(0, p.find_first_not_of('0'));
+        if (f_args[i] != 0) {
+          p = std::bitset<64>(f_args[i]).to_string();
+          p.erase(0, p.find_first_not_of('0'));
+        } else
+          p = "0";
       } else if (print_type == "base10") {
         p = std::to_string(f_args[i]);
       } else {
